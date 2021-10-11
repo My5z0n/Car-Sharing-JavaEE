@@ -1,0 +1,53 @@
+// Get all users
+GET http://localhost:9080/car-share/api/user/
+###
+
+// Get Single User
+GET http://localhost:9080/car-share/api/user/1
+###
+
+//Get User whith not exists
+GET http://localhost:9080/car-share/api/user/99
+###
+
+//Get user avatar
+GET http://localhost:9080/car-share/api/avatars/1
+###
+
+//Get non-exist avatar
+GET http://localhost:9080/car-share/api/avatars/2
+###
+
+//Get non-exist user avatar
+GET http://localhost:9080/car-share/api/avatars/99
+###
+
+//Set avatar
+PUT http://localhost:9080/car-share/api/avatars/2
+Content-Type: multipart/form-data; boundary=boundary
+
+--boundary
+Content-Disposition: form-data; name="avatar"; filename="c.png'
+
+< ../../src/main/resources/pl/edu/pg/eti/kask/car/configuration/avatar/c.png
+--boundary--
+###
+
+//Get  avatar
+GET http://localhost:9080/car-share/api/avatars/2
+###
+
+//Update
+PUT http://localhost:9080/car-share/api/avatars/2
+Content-Type: multipart/form-data; boundary=boundary
+
+--boundary
+Content-Disposition: form-data; name="avatar"; filename="a.png'
+
+< ../../src/main/resources/pl/edu/pg/eti/kask/car/configuration/avatar/a.png
+--boundary--
+###
+
+//Delete Avatar
+DELETE http://localhost:9080/car-share/api/avatars/1
+###
