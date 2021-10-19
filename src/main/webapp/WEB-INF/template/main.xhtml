@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <f:view>
+        <h:head>
+            <meta charset="UTF-8"/>
+            <meta name="description" content="Car Share web application"/>
+            <meta name="keywords" content="CARSHARE"/>
+            <meta name="author" content="Szymon Nagel"/>
+            <title>Simple RPG</title>
+
+            <h:outputStylesheet library="default" name="css/styles.css"/>
+        </h:head>
+        <h:body>
+            <div class="container">
+                <header class="header">
+                    <h1>Car-Share
+                        <h:graphicImage name="images/sport-car.png" alt="Logo" styleClass="logoimg"/>
+                    </h1>
+
+
+
+
+                </header>
+
+                <nav class="navigation-bar">
+                    <ul>
+                        <li><h:link outcome="/index.xhtml">main</h:link></li>
+                        <li><h:link outcome="/about/about.xhtml">about</h:link></li>
+                        <li><h:link outcome="/car/car_list.xhtml">cars</h:link></li>
+                        <li><h:link outcome="/carShare/carShare_create__basic.xhtml">Create Car Share</h:link></li>
+                    </ul>
+                </nav>
+
+                <section class="main-section">
+                    <ui:insert name="content"/>
+                </section>
+
+                <footer class="footer">
+                    <p>Copyright &#169; 2021, Szymon Nagel</p>
+                </footer>
+            </div>
+        </h:body>
+    </f:view>
+</html>

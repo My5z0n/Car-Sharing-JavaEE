@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                template="/WEB-INF/template/main.xhtml">
+
+    <ui:define name="content">
+        <h:outputStylesheet library="character" name="css/character_create.css"/><!-- Automatically relocated to head. -->
+        <h:panelGroup  layout="block">
+            <article class="text--justified">
+                <header><h2>Create character - basic informatin</h2></header>
+                <h:form class="character__form">
+                    <h:button class="ui-control ui-button" value="Previous" disabled="true"/>
+
+                    <h:commandButton class="ui-control ui-button" value="Next"
+                                     action="#{carShareCreate.goToConfirmAction()}"/>
+
+                    <h:outputLabel for="name" value="Price:"/>
+                    <h:inputText class="ui-control ui-input" id="name" value="#{carShareCreate.carShare.price}"/>
+
+                    <h:outputLabel for="name" value="StartDate (YYYY-MM-DD):"/>
+                    <h:inputText class="ui-control ui-input" id="startDate" value="#{carShareCreate.carShare.startDate}">
+                        <f:convertDateTime pattern="yyyy-MM-dd"/>
+                    </h:inputText>
+
+                    <h:outputLabel for="name" value="EndDate (YYYY-MM-DD):"/>
+                    <h:inputText class="ui-control ui-input" id="endDate" value="#{carShareCreate.carShare.endDate}">
+                        <f:convertDateTime pattern="yyyy-MM-dd"/>
+                    </h:inputText>
+
+                    <h:outputLabel for="profession" value="Car:"/>
+                    <h:selectOneMenu id="profession" value="#{carShareCreate.carShare.car}"
+                                      layout="pageDirection">
+                        <f:selectItems var="car" value="#{carShareCreate.cars}" itemValue="#{car}"
+                                       itemLabel="#{car.plate}" itemLabelEscaped="false"/>
+                    </h:selectOneMenu>
+
+                    <h:commandButton class="ui-control ui-button" value="Cancel" immediate="true"
+                                     action="#{carShareCreate.cancelAction()}"/>
+                </h:form>
+            </article>
+
+
+        </h:panelGroup>
+    </ui:define>
+
+</ui:composition>

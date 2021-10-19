@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+                template="/WEB-INF/template/main.xhtml">
+
+    <f:metadata>
+        <f:viewParam name="id" value="#{carView.id}" required="true"/>
+        <f:viewAction action="#{carView.init()}"/>
+        <f:viewAction action="#{carShareList.init(carView.id)}"/>
+    </f:metadata>
+    <c:set var="myVAR" value="#{carView.id}" />
+    <ui:define name="content">
+        <h:outputStylesheet library="character" name="css/character_view.css"/><!-- Automatically relocated to head. -->
+        <h:panelGroup  layout="block">
+            <article class="text--justified">
+                <header><h2>PLATE: <h:outputText value="#{carView.car.plate}"/></h2></header>
+                <div class="character__grid">
+                    <div class="c11">
+                        Production year: <h:outputText
+                            value="#{carView.car.year}"/>
+                    </div>
+
+                    <div class="c12">
+                        Brand Name: <h:outputText value="#{carView.car.brandName}"/>
+                    </div>
+                    <div class="c13">
+                        Model Name: <h:outputText value="#{carView.car.model}"/>
+                    </div>
+                    <div class="c14">Cost Per Minute: <h:outputText value="#{carView.car.costPerMinute}"/></div>
+                </div>
+                <div class="c15">Is avialiable? <h:outputText value="#{carView.car.availability}"/></div>
+
+            </article>
+
+        </h:panelGroup>
+        <h1>CARS:</h1>
+        <h:dataTable value="#{carShareList.getcarShares(carView.car.plate).carShares}" var="car" styleClass="data-table">
+            <h:column>
+                <f:facet name="header">ID</f:facet>
+                <h:outputText value="#{car.id}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">view</f:facet>
+                <h:link outcome="/carShare/carShare_view.xhtml" value="view">
+                    <f:param name="id" value="#{car.id}"/>
+                </h:link>
+            </h:column>
+            <h:column>
+                <f:facet name="header">edit</f:facet>
+                <h:link outcome="/carShare/carShare_edit.xhtml" value="edit">
+                    <f:param name="id" value="#{car.id}"/>
+                </h:link>
+            </h:column>
+            <h:column>
+                <f:facet name="header">delete</f:facet>
+                <h:form>
+                    <h:commandButton styleClass="ui-button ui-control" value="delete"
+                                     action="#{carShareList.deleteAction(car.id)}"/>
+                </h:form>
+            </h:column>
+        </h:dataTable>
+
+    </ui:define>
+
+</ui:composition>

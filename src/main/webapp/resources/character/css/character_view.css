@@ -1,0 +1,60 @@
+.character__grid {
+    display: grid;
+    grid-template-columns: 350px 150px 150px 350px;
+}
+
+.character__portrait {
+    grid-column: 4;
+    grid-row-start: 1;
+    grid-row-end: 8;
+}
+
+.c11 {
+    grid-column: 1;
+    grid-row: 1;
+}
+
+.c13 {
+    grid-column: 1;
+    grid-row: 3;
+}
+
+.c14 {
+    grid-column: 1;
+    grid-row: 4;
+}
+
+.c12 {
+    grid-column: 1;
+    grid-row: 2
+}
+
+.c22 {
+    grid-column: 2;
+    grid-row: 2;
+}
+
+.c23 {
+    grid-column: 3;
+    grid-row: 2;
+}
+
+.c15 {
+    grid-column: 1;
+    grid-row: 5;
+}
+
+.c14-6 {
+    grid-column-start: 1;
+    grid-column-end: 4;
+    grid-row-start: 6;
+    grid-row-end: 8;
+}
+
+.character__stat {
+    text-align: center;
+}
+
+.character__stat span {
+    display: block;
+}

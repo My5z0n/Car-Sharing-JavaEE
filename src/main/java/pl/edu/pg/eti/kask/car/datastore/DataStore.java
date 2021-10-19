@@ -1,11 +1,19 @@
 package pl.edu.pg.eti.kask.car.datastore;
 
 import lombok.extern.java.Log;
+import pl.edu.pg.eti.kask.car.car.entity.Car;
+import pl.edu.pg.eti.kask.car.carShare.entity.CarShare;
 import pl.edu.pg.eti.kask.car.serialization.CloningUtility;
 import pl.edu.pg.eti.kask.car.user.entity.Avatar;
 import pl.edu.pg.eti.kask.car.user.entity.User;
 
 import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
+
+import javax.inject.Inject;
+import io.xlate.inject.Property;
+import io.xlate.inject.PropertyResource;
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -15,6 +23,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * For the sake of simplification instead of using real database this example is using an data source object which
@@ -24,11 +33,15 @@ import java.util.stream.Collectors;
  */
 @Log
 @ApplicationScoped
+
 public class DataStore {
 
-    public static class StaticPaths {
-        public static final String DATA_SAVE =  "C:\\Users\\Myszon\\Desktop\\avatars\\";
-    }
+
+    @Inject
+    @Property(resolveEnvironment = true,
+            resource = @PropertyResource("classpath:/app.properties"))
+        private  String DATA_SAVE ;
+
 
     /**
      * Set of all users.
@@ -37,6 +50,9 @@ public class DataStore {
 
     private Set<Avatar> avatars = new HashSet<>();
 
+    private Set<Car> cars = new HashSet<>();
+
+    private Set<CarShare> carShares = new HashSet<>();
 
     /**
      * Seeks for single user.
@@ -111,7 +127,8 @@ public class DataStore {
     }
 
     public byte[] getAvatarBytes(Long id) {
-        Path filePath = Paths.get(StaticPaths.DATA_SAVE + id.toString() + ".png");
+        System.out.println(DATA_SAVE);
+        Path filePath = Paths.get(DATA_SAVE + id.toString() + ".png");
         byte[] bytes = new byte[0];
         try {
             bytes = Files.readAllBytes(filePath);
@@ -122,7 +139,7 @@ public class DataStore {
     }
 
     public void setAvatarBytes(Long id, byte[] bytes) {
-        Path filePath = Paths.get(StaticPaths.DATA_SAVE + id.toString() + ".png");
+        Path filePath = Paths.get(DATA_SAVE + id.toString() + ".png");
         try {
             Files.write(filePath, bytes);
         } catch (IOException e) {
@@ -131,7 +148,7 @@ public class DataStore {
     }
 
     public void delAvatarBytes(Long id) {
-        Path filePath = Paths.get(StaticPaths.DATA_SAVE + id.toString() + ".png");
+        Path filePath = Paths.get(DATA_SAVE + id.toString() + ".png");
         try {
             Files.delete(filePath);
         } catch (IOException e) {
@@ -183,5 +200,77 @@ public class DataStore {
                     throw new IllegalArgumentException(
                             String.format("The avatar with id \"%d\" does not exist", avatar.getId()));
                 });
+    }
+
+    public synchronized List<Car> findAllCars() {
+        return cars.stream().map(CloningUtility::clone).collect(Collectors.toList());
+    }
+
+    public synchronized Optional<Car> findCar(String id) {
+        return cars.stream()
+                .filter(character -> character.getPlate().equals(id))
+                .findFirst()
+                .map(CloningUtility::clone);
+    }
+
+    public synchronized Optional<CarShare> findCarShare(Long id) {
+        return carShares.stream()
+                .filter(carShare -> carShare.getId().equals(id))
+                .findFirst()
+                .map(CloningUtility::clone);
+    }
+
+    public synchronized List<CarShare> findAllCarShares() {
+        return carShares.stream().map(CloningUtility::clone).collect(Collectors.toList());
+    }
+
+    public synchronized void deleteCarShare(Long id) {
+        findCarShare(id).ifPresentOrElse(
+                original -> carShares.remove(original),
+                () -> {
+                    throw new IllegalArgumentException(
+                            String.format("The Carshare with id \"%d\" does not exist", id));
+                });
+    }
+
+    public synchronized void updateCarShare(CarShare entity) {
+        findCarShare(entity.getId()).ifPresentOrElse(
+                original -> {
+                    carShares.remove(original);
+                    carShares.add(entity);
+                },
+                () -> {
+                    throw new IllegalArgumentException(
+                            String.format("The carShare with id \"%d\" does not exist", entity.getId()));
+                });
+    }
+
+    public Stream<CarShare> getCarShareStream() {
+        return carShares.stream();
+    }
+
+    public synchronized void deleteCar(String id) throws IllegalArgumentException {
+            var liest = getCarShareStream()
+                    .filter(carShare -> carShare.getCar().getPlate().equals(id))
+                    .map(CloningUtility::clone)
+                    .collect(Collectors.toList());
+        for (CarShare carShares:liest) {
+            deleteCarShare(carShares.getId());
+        }
+
+        findCar(id).ifPresentOrElse(
+                original -> cars.remove(original),
+                () -> {
+                    throw new IllegalArgumentException(
+                            String.format("The car with id \"%s\" does not exist", id));
+                });
+    }
+    public synchronized void createCar(Car car) throws IllegalArgumentException {
+        cars.add(car);
+    }
+
+    public synchronized void createCarShare(CarShare carShare) throws IllegalArgumentException {
+        carShare.setId(findAllCarShares().stream().mapToLong(CarShare::getId).max().orElse(0) + 1);
+        carShares.add(carShare);
     }
 }

@@ -22,6 +22,11 @@
 
     <dependencies>
         <dependency>
+            <groupId>io.xlate</groupId>
+            <artifactId>property-inject</artifactId>
+            <version>1.0.5</version>
+        </dependency>
+        <dependency>
             <groupId>jakarta.platform</groupId>
             <artifactId>jakarta.jakartaee-api</artifactId>
             <version>8.0.0</version>
@@ -35,6 +40,7 @@
             <scope>provided</scope>
         </dependency>
     </dependencies>
+
 
     <build>
         <plugins>

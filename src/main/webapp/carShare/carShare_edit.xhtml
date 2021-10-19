@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                template="/WEB-INF/template/main.xhtml">
+
+    <f:metadata>
+        <f:viewParam name="id" value="#{carShareEdit.id}" required="true"/>
+        <f:viewAction action="#{carShareEdit.init()}"/>
+    </f:metadata>
+
+    <ui:define name="content">
+        <h:outputStylesheet library="character" name="css/character_edit.css"/><!-- Automatically relocated to head. -->
+        <h:panelGroup layout="block">
+            <article class="text--justified">
+                <header><h2>Edit character info</h2></header>
+                <h:form class="character__form">
+                    <h:outputLabel for="age" value="Price:"/>
+                    <h:inputText class="ui-control ui-input" id="age" value="#{carShareEdit.carShare.price}"/>
+                    <h:outputLabel for="age" value="Start Date:"/>
+                    <h:inputText class="ui-control ui-input" id="startDate" value="#{carShareEdit.carShare.startDate}">
+                        <f:convertDateTime pattern="yyyy-MM-dd"/>
+                    </h:inputText>
+                    <h:outputLabel for="age" value="End Date:"/>
+                    <h:inputText class="ui-control ui-input" id="endDate" value="#{carShareEdit.carShare.endDate}">
+                        <f:convertDateTime pattern="yyyy-MM-dd"/>
+                    </h:inputText>
+                    <h:commandButton class="ui-control ui-button" value="Update"
+                                     action="#{carShareEdit.saveAction()}"/>
+                </h:form>
+            </article>
+
+
+        </h:panelGroup>
+    </ui:define>
+
+</ui:composition>
