@@ -53,8 +53,11 @@ public class CarRepository implements Repository<Car, String> {
 
     @Override
     public void update(Car entity) {
-        throw new UnsupportedOperationException("Operation not implemented.");
+        store.updateCar(entity);
     }
 
 
+    public void deleteAll() {
+        store.deleteAllCars();
+    }
 }

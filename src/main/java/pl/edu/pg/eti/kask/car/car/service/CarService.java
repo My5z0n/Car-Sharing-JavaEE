@@ -51,8 +51,25 @@ public class CarService {
      *
      * @param profession new profession to be saved
      */
-    public void create(Car profession) {
-        repository.create(profession);
+    public boolean create(Car car) {
+        var res = repository.find(car.getPlate());
+        if(res.isPresent())
+        {
+            return false;
+        }
+        else
+        {
+            repository.create(car);
+            return true;
+        }
+
     }
 
+    public void deleteAll() {
+        repository.deleteAll();
+    }
+
+    public void update(Car car) {
+        repository.update(car);
+    }
 }

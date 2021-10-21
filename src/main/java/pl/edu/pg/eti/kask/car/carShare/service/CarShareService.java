@@ -4,6 +4,7 @@ import lombok.NoArgsConstructor;
 import pl.edu.pg.eti.kask.car.car.entity.Car;
 import pl.edu.pg.eti.kask.car.carShare.entity.CarShare;
 import pl.edu.pg.eti.kask.car.carShare.repository.CarShareRepository;
+import pl.edu.pg.eti.kask.car.serialization.CloningUtility;
 import pl.edu.pg.eti.kask.car.user.repository.UserRepository;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -11,6 +12,7 @@ import javax.inject.Inject;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -76,8 +78,17 @@ public class CarShareService {
      *
      * @param carShare new character
      */
-    public void create(CarShare carShare) {
-        carShareRepository.create(carShare);
+    public boolean create(CarShare carShare) {
+        var res = carShareRepository.find(carShare.getId());
+        if(res.isPresent())
+        {
+            return false;
+        }
+        else
+        {
+            carShareRepository.create(carShare);
+            return true;
+        }
     }
 
 
@@ -101,4 +112,16 @@ public class CarShareService {
     }
 
 
+    public Optional<CarShare> findAllByCarAndId(String plate, Long id) {
+        return carShareRepository.findAllByCarsAndId(plate,id);
+
+    }
+
+    public void deleteShares(List<CarShare> carShares) {
+
+        for (CarShare carShare : carShares)
+        {
+            carShareRepository.delete(carShareRepository.find(carShare.getId()).orElseThrow());
+        }
+    }
 }

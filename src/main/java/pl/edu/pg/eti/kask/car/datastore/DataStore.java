@@ -273,4 +273,23 @@ public class DataStore {
         carShare.setId(findAllCarShares().stream().mapToLong(CarShare::getId).max().orElse(0) + 1);
         carShares.add(carShare);
     }
+
+    public void deleteAllCars() {
+        var carlist = this.findAllCars();
+        for (Car car: carlist){
+            deleteCar(car.getPlate());
+        }
+    }
+
+    public void updateCar(Car entity) {
+        findCar(entity.getPlate()).ifPresentOrElse(
+                original -> {
+                    cars.remove(original);
+                    cars.add(CloningUtility.clone(entity));
+                },
+                () -> {
+                    throw new IllegalArgumentException(
+                            String.format("The user with id \"%s\" does not exist", entity.getPlate()));
+                });
+    }
 }

@@ -10,6 +10,7 @@ import pl.edu.pg.eti.kask.car.serialization.CloningUtility;
 import javax.enterprise.context.Dependent;
 import javax.inject.Inject;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -83,4 +84,12 @@ public class CarShareRepository implements Repository<CarShare, Long> {
                 .collect(Collectors.toList());
     }
 
+    public Optional<CarShare> findAllByCarsAndId(String plate, Long id) {
+        return store.getCarShareStream()
+                .filter(carShare -> carShare.getCar().getPlate().equals(plate))
+                .filter(carShare -> carShare.getId().equals(id))
+                .findFirst()
+                .map(CloningUtility::clone);
+
+    }
 }
