@@ -67,6 +67,18 @@ public class AvatarServlet extends HttpServlet {
     }
 
     @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String path = ServletUtility.parseRequestPath(request);
+        String servletPath = request.getServletPath();
+        if (Paths.AVARARS.equals(servletPath)) {
+            if (path.matches(Patterns.AVATAR)) {
+                postAvatar(request, response);
+                return;
+            }
+        }
+        response.sendError(HttpServletResponse.SC_BAD_REQUEST);
+    }
+    @Override
     protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String path = ServletUtility.parseRequestPath(request);
         String servletPath = request.getServletPath();
@@ -93,6 +105,31 @@ public class AvatarServlet extends HttpServlet {
     }
 
 
+    private void postAvatar(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+
+        Long id = Long.parseLong(ServletUtility.parseRequestPath(request).replaceAll("/", ""));
+        Optional<User> user = userService.find(id);
+        Optional<Avatar> avatar = avatarService.find(id);
+
+        if (user.isPresent()) {
+            Part portrait = request.getPart(Parameters.AVATAR);
+            if (avatar.isPresent()) {
+                if (portrait != null) {
+                    response.sendError(HttpServletResponse.SC_NOT_FOUND);
+                }
+            } else {
+                if (portrait != null) {
+                    var bytes = portrait.getInputStream().readAllBytes();
+                    CreateAvatarRequest requestAvatar = CreateAvatarRequest.builder().id(id).image(bytes).build();
+                    avatarService.create(CreateAvatarRequest.dtoToEntityMapper().apply(requestAvatar));
+                    response.setStatus(HttpServletResponse.SC_OK);
+                }
+            }
+        } else {
+            response.sendError(HttpServletResponse.SC_NOT_FOUND);
+        }
+    }
+
     private void putAvatar(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 
         Long id = Long.parseLong(ServletUtility.parseRequestPath(request).replaceAll("/", ""));
@@ -104,16 +141,15 @@ public class AvatarServlet extends HttpServlet {
             if (avatar.isPresent()) {
                 if (portrait != null) {
                     avatarService.update(id, portrait.getInputStream());
+                    response.setStatus(HttpServletResponse.SC_OK);
                 }
             } else {
                 if (portrait != null) {
-                    var bytes = portrait.getInputStream().readAllBytes();
-                    CreateAvatarRequest requestAvatar = CreateAvatarRequest.builder().id(id).image(bytes).build();
-                    avatarService.create(CreateAvatarRequest.dtoToEntityMapper().apply(requestAvatar));
+                    response.sendError(HttpServletResponse.SC_NOT_FOUND);
                 }
 
             }
-            response.setStatus(HttpServletResponse.SC_OK);
+
 
         } else {
             response.sendError(HttpServletResponse.SC_NOT_FOUND);

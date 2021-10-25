@@ -8,11 +8,7 @@ import pl.edu.pg.eti.kask.car.user.entity.Avatar;
 import pl.edu.pg.eti.kask.car.user.entity.User;
 
 import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
 
-import javax.inject.Inject;
-import io.xlate.inject.Property;
-import io.xlate.inject.PropertyResource;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -37,10 +33,8 @@ import java.util.stream.Stream;
 public class DataStore {
 
 
-    @Inject
-    @Property(resolveEnvironment = true,
-            resource = @PropertyResource("classpath:/app.properties"))
-        private  String DATA_SAVE ;
+
+        private  String DATA_SAVE ="C:\\Users\\Myszon\\Desktop\\avatars\\";
 
 
     /**

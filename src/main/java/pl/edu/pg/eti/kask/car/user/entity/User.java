@@ -5,6 +5,10 @@ import lombok.experimental.SuperBuilder;
 import pl.edu.pg.eti.kask.car.location.Location;
 import pl.edu.pg.eti.kask.car.role.Role;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
@@ -16,9 +20,12 @@ import java.math.BigDecimal;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @ToString
 @EqualsAndHashCode
+@Entity
+@Table(name = "users")
 public class User implements Serializable {
 
-
+    @Id
+    @GeneratedValue
     private Long id;
 
     private String login;

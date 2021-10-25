@@ -6,6 +6,7 @@ import pl.edu.pg.eti.kask.car.car.entity.Car;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.Date;
 
 @Getter
@@ -18,7 +19,7 @@ import java.util.Date;
 public class CarShare implements Serializable {
     private Long id;
     private Car Car;
-    private Date startDate;
-    private Date endDate;
+    private LocalDate startDate;
+    private LocalDate  endDate;
     private BigDecimal price;
 }

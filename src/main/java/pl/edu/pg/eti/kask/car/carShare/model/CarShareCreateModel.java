@@ -8,6 +8,7 @@ import pl.edu.pg.eti.kask.car.user.entity.User;
 
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.function.BiFunction;
 import java.util.function.Function;
@@ -35,12 +36,12 @@ public class CarShareCreateModel {
     /**
      * Character's constitution.
      */
-    private Date startDate;
+    private LocalDate startDate;
 
     /**
      * Character's charisma.
      */
-    private Date endDate;
+    private LocalDate endDate;
 
     /**
      * Character's profession.

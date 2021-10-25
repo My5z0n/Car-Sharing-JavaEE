@@ -15,6 +15,7 @@ import pl.edu.pg.eti.kask.car.user.service.UserService;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.context.Initialized;
+import javax.enterprise.context.control.RequestContextController;
 import javax.enterprise.event.Observes;
 import javax.inject.Inject;
 import java.io.InputStream;
@@ -40,14 +41,15 @@ public class InitializedData {
     private final AvatarService avatarService;
     private final CarService carService;
     private final CarShareService carShareService;
-
+    private final RequestContextController requestContextController;
 
     @Inject
-    public InitializedData(UserService userService, AvatarService avatarService, CarService carService, CarShareService carShareService) {
+    public InitializedData(UserService userService, AvatarService avatarService, CarService carService, CarShareService carShareService,  RequestContextController requestContextController) {
         this.avatarService = avatarService;
         this.userService = userService;
         this.carService = carService;
         this.carShareService = carShareService;
+        this.requestContextController = requestContextController;
     }
 
     public void contextInitialized(@Observes @Initialized(ApplicationScoped.class) Object init) {
@@ -59,7 +61,7 @@ public class InitializedData {
      * be created only once.
      */
     private synchronized void init() {
-
+        requestContextController.activate();
         User admin = User.builder()
                 .login("adamin1")
                 .name("Adam")
@@ -112,7 +114,6 @@ public class InitializedData {
                 .model("Supra")
                 .costPerMinute(new BigDecimal(22))
                 .Year(2005)
-                .Location(new Location(11, 11))
                 .build();
 
         Car car2 = Car.builder()
@@ -122,7 +123,6 @@ public class InitializedData {
                 .model("Fabia")
                 .costPerMinute(new BigDecimal("33.1"))
                 .Year(2008)
-                .Location(new Location(99, 99))
                 .build();
 
         Car car3 = Car.builder()
@@ -132,7 +132,6 @@ public class InitializedData {
                 .model("Civic")
                 .costPerMinute(new BigDecimal(1))
                 .Year(2020)
-                .Location(new Location(33, -12))
                 .build();
 
         carService.create(car1);
@@ -142,26 +141,27 @@ public class InitializedData {
         //System.out.println(date.getTime());
         CarShare carshare1 = CarShare.builder()
                 .Car(car1)
-                .endDate( new GregorianCalendar(2014, Calendar.FEBRUARY, 18).getTime())
-                .startDate(new GregorianCalendar(2014, Calendar.FEBRUARY, 11).getTime())
+                .endDate( LocalDate.of(2014, Calendar.FEBRUARY, 18))
+                .startDate( LocalDate.of(2014, Calendar.FEBRUARY, 11))
                 .price(new BigDecimal("11.01"))
                 .build();
         CarShare carshare2 = CarShare.builder()
                 .Car(car1)
-                .endDate(new GregorianCalendar(2018, Calendar.AUGUST, 22).getTime())
-                .startDate(new GregorianCalendar(2018, Calendar.AUGUST, 9).getTime())
+                .endDate( LocalDate.of(2018, Calendar.AUGUST, 22))
+                .startDate( LocalDate.of(2018, Calendar.AUGUST, 9))
                 .price(new BigDecimal("22.01"))
                 .build();
         CarShare carshare3 = CarShare.builder()
                 .Car(car2)
-                .endDate(new GregorianCalendar(2020, Calendar.AUGUST, 4).getTime())
-                .startDate(new GregorianCalendar(2020, Calendar.MARCH, 3).getTime())
+                .endDate( LocalDate.of(2020, Calendar.AUGUST, 4))
+                .startDate( LocalDate.of(2020, Calendar.MARCH, 3))
                 .price(new BigDecimal("6666.01"))
                 .build();
 
         carShareService.create(carshare1);
         carShareService.create(carshare2);
         carShareService.create(carshare3);
+        requestContextController.deactivate();
     }
 
     /**

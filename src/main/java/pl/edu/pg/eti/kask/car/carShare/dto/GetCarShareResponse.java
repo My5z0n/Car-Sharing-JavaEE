@@ -4,6 +4,7 @@ import lombok.*;
 import pl.edu.pg.eti.kask.car.carShare.entity.CarShare;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.function.Function;
 import java.util.function.Supplier;
@@ -19,8 +20,8 @@ public class GetCarShareResponse {
 
     private Long id;
     private String car;
-    private Date startDate;
-    private Date endDate;
+    private LocalDate startDate;
+    private LocalDate endDate;
     private BigDecimal price;
 
 

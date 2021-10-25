@@ -21,12 +21,12 @@
 
                     <h:outputLabel for="name" value="StartDate (YYYY-MM-DD):"/>
                     <h:inputText class="ui-control ui-input" id="startDate" value="#{carShareCreate.carShare.startDate}">
-                        <f:convertDateTime pattern="yyyy-MM-dd"/>
+                        <f:convertDateTime type="localDate"  pattern="yyyy-MM-dd" dateStyle="long"/>
                     </h:inputText>
 
                     <h:outputLabel for="name" value="EndDate (YYYY-MM-DD):"/>
                     <h:inputText class="ui-control ui-input" id="endDate" value="#{carShareCreate.carShare.endDate}">
-                        <f:convertDateTime pattern="yyyy-MM-dd"/>
+                        <f:convertDateTime type="localDate"  pattern="yyyy-MM-dd"  dateStyle="long"/>
                     </h:inputText>
 
                     <h:outputLabel for="profession" value="Car:"/>

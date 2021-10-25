@@ -24,5 +24,5 @@ public class Car implements Serializable {
     int Year;
     BigDecimal costPerMinute;
     Boolean availability;
-    Location Location;
+
 }

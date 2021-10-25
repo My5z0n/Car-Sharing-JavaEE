@@ -22,11 +22,6 @@
 
     <dependencies>
         <dependency>
-            <groupId>io.xlate</groupId>
-            <artifactId>property-inject</artifactId>
-            <version>1.0.5</version>
-        </dependency>
-        <dependency>
             <groupId>jakarta.platform</groupId>
             <artifactId>jakarta.jakartaee-api</artifactId>
             <version>8.0.0</version>
@@ -40,7 +35,6 @@
             <scope>provided</scope>
         </dependency>
     </dependencies>
-
 
     <build>
         <plugins>
@@ -62,20 +56,49 @@
                         <artifactId>liberty-maven-plugin</artifactId>
                         <version>3.2.3</version>
                     </plugin>
+
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-dependency-plugin</artifactId>
+                        <version>3.0.0</version>
+                        <executions>
+                            <execution>
+                                <id>copy-derby</id>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>copy</goal>
+                                </goals>
+                                <configuration>
+                                    <artifactItems>
+                                        <artifactItem>
+                                            <groupId>com.h2database</groupId>
+                                            <artifactId>h2</artifactId>
+                                            <version>1.4.200</version>
+                                            <outputDirectory>
+                                                ${project.build.directory}/liberty/wlp/usr/shared/resources
+                                            </outputDirectory>
+                                        </artifactItem>
+                                    </artifactItems>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
                 </plugins>
             </build>
         </profile>
     </profiles>
 
-    <developers>
-        <developer>
-            <name>Szymon Nagel</name>
-            <email>s175818@student.pg.edu.pl</email>
-        </developer>
-    </developers>
+
 
     <organization>
         <name>Gdańsk University of Technology</name>
     </organization>
+
+    <licenses>
+        <license>
+            <name>MIT License</name>
+            <url>https://opensource.org/licenses/MIT</url>
+        </license>
+    </licenses>
 
 </project>

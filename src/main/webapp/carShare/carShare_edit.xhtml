@@ -20,11 +20,11 @@
                     <h:inputText class="ui-control ui-input" id="age" value="#{carShareEdit.carShare.price}"/>
                     <h:outputLabel for="age" value="Start Date:"/>
                     <h:inputText class="ui-control ui-input" id="startDate" value="#{carShareEdit.carShare.startDate}">
-                        <f:convertDateTime pattern="yyyy-MM-dd"/>
+                        <f:convertDateTime type="localDate"  pattern="dd-MM-yyyy" dateStyle="long"/>
                     </h:inputText>
                     <h:outputLabel for="age" value="End Date:"/>
                     <h:inputText class="ui-control ui-input" id="endDate" value="#{carShareEdit.carShare.endDate}">
-                        <f:convertDateTime pattern="yyyy-MM-dd"/>
+                        <f:convertDateTime type="localDate"  pattern="dd-MM-yyyy" dateStyle="long"/>
                     </h:inputText>
                     <h:commandButton class="ui-control ui-button" value="Update"
                                      action="#{carShareEdit.saveAction()}"/>

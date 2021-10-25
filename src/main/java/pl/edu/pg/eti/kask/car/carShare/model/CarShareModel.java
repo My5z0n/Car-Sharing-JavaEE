@@ -5,6 +5,7 @@ import pl.edu.pg.eti.kask.car.car.entity.Car;
 import pl.edu.pg.eti.kask.car.carShare.entity.CarShare;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.function.Function;
 
@@ -19,8 +20,8 @@ import java.util.function.Function;
 public class CarShareModel {
     private Long id;
     private String car;
-    private Date startDate;
-    private Date endDate;
+    private LocalDate startDate;
+    private LocalDate endDate;
     private BigDecimal price;
 
 

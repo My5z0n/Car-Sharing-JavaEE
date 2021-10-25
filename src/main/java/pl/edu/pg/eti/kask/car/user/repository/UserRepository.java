@@ -1,59 +1,76 @@
 package pl.edu.pg.eti.kask.car.user.repository;
 
+import lombok.extern.java.Log;
 import pl.edu.pg.eti.kask.car.datastore.DataStore;
 import pl.edu.pg.eti.kask.car.repository.Repository;
 import pl.edu.pg.eti.kask.car.user.entity.User;
 
 import javax.enterprise.context.Dependent;
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
 
-@Dependent
+@RequestScoped
+@Log
 public class UserRepository implements Repository<User, Long> {
 
+    private EntityManager em;
 
-    private DataStore store;
-
-    @Inject
-    public UserRepository(DataStore store) {
-        this.store = store;
+    @PersistenceContext
+    public void setEm(EntityManager em) {
+        this.em = em;
     }
+  //  private DataStore store;
 
-    public Optional<User> find(String login) {
-        return store.findUser(login);
-    }
+   // @Inject
+    //public UserRepository(DataStore store) {
+   //     this.store = store;
+   // }
+
+   // public Optional<User> find(String login) {
+   //     return Optional.ofNullable(em.find(User.class, id));
+  //  }
 
     @Override
     public Optional<User> find(Long id) {
-        return store.findUser(id);
+        return Optional.ofNullable(em.find(User.class, id));
     }
 
     @Override
     public List<User> findAll() {
-        return store.findAllUsers();
+        return em.createQuery("select u from User u", User.class).getResultList();
     }
 
     @Override
     public void create(User entity) {
-        store.createUser(entity);
+        em.persist(entity);
     }
 
     @Override
     public void delete(User entity) {
-        store.deleteUser(entity.getId());
+        em.remove(em.find(User.class, entity.getLogin()));
     }
 
     @Override
     public void update(User entity) {
-        store.updateUser(entity);
+        em.merge(entity);
     }
 
+    public void detach(User entity) {
+        em.detach(entity);
+    }
+
+
+   /*
     public Optional<User> findByLoginAndPassword(String login, String password) {
         return store.findAllUsers().stream()
                 .filter(user -> user.getLogin().equals(login) && user.getPassword().equals(password))
                 .findFirst();
     }
-
+*/
 }

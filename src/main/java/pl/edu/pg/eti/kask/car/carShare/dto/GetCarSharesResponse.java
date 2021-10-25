@@ -4,6 +4,7 @@ import lombok.*;
 import pl.edu.pg.eti.kask.car.carShare.entity.CarShare;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -27,7 +28,7 @@ public class GetCarSharesResponse {
     @EqualsAndHashCode
     public static class CarShare {
         private Long id;
-        private Date startDate;
+        private LocalDate startDate;
     }
 
     @Singular
