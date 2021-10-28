@@ -1,11 +1,8 @@
 package pl.edu.pg.eti.kask.car.carShare.model;
 
 import lombok.*;
-import pl.edu.pg.eti.kask.car.carShare.entity.CarShare;
 
-import java.math.BigDecimal;
 import java.util.Collection;
-import java.util.Date;
 import java.util.List;
 import java.util.function.Function;
 
@@ -30,7 +27,6 @@ public class CarSharesModel {
 
         private Long id;
         private String car;
-
 
 
     }

@@ -22,8 +22,6 @@ import java.io.InputStream;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
 
 /**
  * Listener started automatically on CDI application context initialized. Injects proxy to the services and fills
@@ -137,22 +135,21 @@ public class InitializedData {
         carService.create(car1);
         carService.create(car2);
         carService.create(car3);
-        var date = java.util.Calendar.getInstance().getTime();
-        //System.out.println(date.getTime());
+
         CarShare carshare1 = CarShare.builder()
-                .Car(car1)
+                .car(car1)
                 .endDate( LocalDate.of(2014, Calendar.FEBRUARY, 18))
                 .startDate( LocalDate.of(2014, Calendar.FEBRUARY, 11))
                 .price(new BigDecimal("11.01"))
                 .build();
         CarShare carshare2 = CarShare.builder()
-                .Car(car1)
+                .car(car1)
                 .endDate( LocalDate.of(2018, Calendar.AUGUST, 22))
                 .startDate( LocalDate.of(2018, Calendar.AUGUST, 9))
                 .price(new BigDecimal("22.01"))
                 .build();
         CarShare carshare3 = CarShare.builder()
-                .Car(car2)
+                .car(car2)
                 .endDate( LocalDate.of(2020, Calendar.AUGUST, 4))
                 .startDate( LocalDate.of(2020, Calendar.MARCH, 3))
                 .price(new BigDecimal("6666.01"))
@@ -161,7 +158,9 @@ public class InitializedData {
         carShareService.create(carshare1);
         carShareService.create(carshare2);
         carShareService.create(carshare3);
+        carShareService.clear();
         requestContextController.deactivate();
+
     }
 
     /**

@@ -7,6 +7,7 @@ import pl.edu.pg.eti.kask.car.car.repository.CarRepository;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
@@ -34,23 +35,24 @@ public class CarService {
      * @param name name of the profession
      * @return container with profession entity
      */
+
     public Optional<Car> find(String name) {
         return repository.find(name);
     }
 
+
     public List<Car> findAll() {
-        return repository.findAll();
+        var aut = repository.findAll();
+        return aut;
     }
 
-    public void delete(String car) {
-        repository.delete(repository.find(car).orElseThrow());
+    @Transactional
+    public void delete(Car car) {
+        repository.delete(car);
     }
 
-    /**
-     * Stores new profession in the data store.
-     *
-     * @param profession new profession to be saved
-     */
+
+    @Transactional
     public boolean create(Car car) {
         var res = repository.find(car.getPlate());
         if(res.isPresent())
@@ -64,11 +66,11 @@ public class CarService {
         }
 
     }
-
+    @Transactional
     public void deleteAll() {
         repository.deleteAll();
     }
-
+    @Transactional
     public void update(Car car) {
         repository.update(car);
     }

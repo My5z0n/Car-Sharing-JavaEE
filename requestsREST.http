@@ -35,7 +35,7 @@ GET http://localhost:9080/car-share/restapi/cars/123XXX123
 ###
 
 #Usun
-DELETE http://localhost:9080/car-share/restapi/cars/GKA123
+DELETE http://localhost:9080/car-share/restapi/cars/123XXX123
 ###
 
 
@@ -49,7 +49,7 @@ GET http://localhost:9080/car-share/restapi/cars/GKA123/shares/
 ###
 
 #Pobieranie elementow
-GET http://localhost:9080/car-share/restapi/cars/GKA123/shares/1
+GET http://localhost:9080/car-share/restapi/cars/GKA123/shares/5
 ###
 
 #Wstawianie elementu
@@ -58,27 +58,27 @@ Content-Type: application/json
 
 {
     "price": 12321.01,
-    "startDate": "2019-02-10T23:00:00Z[UTC]",
-    "endDate": "2019-03-17T23:00:00Z[UTC]"
+    "startDate": "2019-02-10",
+    "endDate": "2019-03-17"
 
 }
 ###
 
 #Modyfikacja Istniejacego
-PUT http://localhost:9080/car-share/restapi/cars/GKA123/shares/4
+PUT http://localhost:9080/car-share/restapi/cars/GKA123/shares/8
 Content-Type: application/json
 
 {
     "price": 1111111,
-    "startDate": "2021-02-10T23:00:00Z[UTC]",
-    "endDate": "2021-03-17T23:00:00Z[UTC]"
+    "startDate": "2021-02-10",
+    "endDate": "2021-03-17"
 
 }
 ###
 
 #Pobieranie elementow
-GET http://localhost:9080/car-share/restapi/cars/GKA123/shares/4
+GET http://localhost:9080/car-share/restapi/cars/GKA123/shares/8
 ###
 
 #Usuwanie elementu
-DELETE http://localhost:9080/car-share/restapi/cars/GKA123/shares/4
+DELETE http://localhost:9080/car-share/restapi/cars/GKA123/shares/8

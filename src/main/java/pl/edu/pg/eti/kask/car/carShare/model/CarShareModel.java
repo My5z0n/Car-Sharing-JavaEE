@@ -1,12 +1,10 @@
 package pl.edu.pg.eti.kask.car.carShare.model;
 
 import lombok.*;
-import pl.edu.pg.eti.kask.car.car.entity.Car;
 import pl.edu.pg.eti.kask.car.carShare.entity.CarShare;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.function.Function;
 
 

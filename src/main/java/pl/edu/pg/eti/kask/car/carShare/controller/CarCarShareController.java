@@ -2,10 +2,6 @@ package pl.edu.pg.eti.kask.car.carShare.controller;
 
 
 import pl.edu.pg.eti.kask.car.car.controller.CarController;
-import pl.edu.pg.eti.kask.car.car.dto.CreateCarRequest;
-import pl.edu.pg.eti.kask.car.car.dto.GetCarResponse;
-import pl.edu.pg.eti.kask.car.car.dto.GetCarsResponse;
-import pl.edu.pg.eti.kask.car.car.dto.UpdateCarRequest;
 import pl.edu.pg.eti.kask.car.car.entity.Car;
 import pl.edu.pg.eti.kask.car.car.service.CarService;
 import pl.edu.pg.eti.kask.car.carShare.dto.CreateCarShareRequest;

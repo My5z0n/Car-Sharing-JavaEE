@@ -52,7 +52,8 @@ public class CarList implements Serializable {
      * @return navigation case to list_characters
      */
     public String deleteAction(CarsModel.Car car) {
-        service.delete(car.getPlate());
+        var car_obj = service.find(car.getPlate());
+        service.delete(car_obj.get());
         return "car_list?faces-redirect=true";
     }
 

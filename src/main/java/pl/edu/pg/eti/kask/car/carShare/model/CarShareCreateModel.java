@@ -4,15 +4,11 @@ import lombok.*;
 import pl.edu.pg.eti.kask.car.car.entity.Car;
 import pl.edu.pg.eti.kask.car.car.model.CarModel;
 import pl.edu.pg.eti.kask.car.carShare.entity.CarShare;
-import pl.edu.pg.eti.kask.car.user.entity.User;
 
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.Date;
-import java.util.function.BiFunction;
 import java.util.function.Function;
-import java.util.function.Supplier;
 
 /**
  * JSF view model class in order to not to use entity classes. Represents new character to be created. Includes oll
@@ -55,7 +51,7 @@ public class CarShareCreateModel {
                 .price(model.getPrice())
                 .startDate(model.getStartDate())
                 .endDate(model.getEndDate())
-                .Car(carFunction.apply(model.getCar().getPlate()))
+                .car(carFunction.apply(model.getCar().getPlate()))
                 .build();
     }
 

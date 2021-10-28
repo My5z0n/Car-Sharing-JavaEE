@@ -37,28 +37,28 @@
 
         </h:panelGroup>
         <h1>CARS:</h1>
-        <h:dataTable value="#{carShareList.getcarShares(carView.car.plate).carShares}" var="car" styleClass="data-table">
+        <h:dataTable value="#{carShareList.getcarShares(carView.car.plate).carShares}" var="carsh" styleClass="data-table">
             <h:column>
                 <f:facet name="header">ID</f:facet>
-                <h:outputText value="#{car.id}"/>
+                <h:outputText value="#{carsh.id}"/>
             </h:column>
             <h:column>
                 <f:facet name="header">view</f:facet>
                 <h:link outcome="/carShare/carShare_view.xhtml" value="view">
-                    <f:param name="id" value="#{car.id}"/>
+                    <f:param name="id" value="#{carsh.id}"/>
                 </h:link>
             </h:column>
             <h:column>
                 <f:facet name="header">edit</f:facet>
                 <h:link outcome="/carShare/carShare_edit.xhtml" value="edit">
-                    <f:param name="id" value="#{car.id}"/>
+                    <f:param name="id" value="#{carsh.id}"/>
                 </h:link>
             </h:column>
             <h:column>
                 <f:facet name="header">delete</f:facet>
                 <h:form>
                     <h:commandButton styleClass="ui-button ui-control" value="delete"
-                                     action="#{carShareList.deleteAction(car.id)}"/>
+                                     action="#{carShareList.deleteAction(carsh.id)}"/>
                 </h:form>
             </h:column>
         </h:dataTable>

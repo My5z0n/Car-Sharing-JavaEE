@@ -80,7 +80,7 @@ public class CarController {
     public Response deleteCar(@PathParam("plate") String name) {
         Optional<Car> car = service.find(name);
         if (car.isPresent()) {
-            service.delete(car.get().getPlate());
+            service.delete(car.get());
             return Response.status(Response.Status.OK).build();
         } else {
             return Response.status(Response.Status.NOT_FOUND).build();
